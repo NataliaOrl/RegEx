@@ -2,10 +2,6 @@ from pprint import pprint
 import csv
 import re
 
-with open("phonebook_raw.csv", encoding="UTF-8") as f:
-    rows = csv.reader(f, delimiter=",")
-    contacts_list = list(rows)
-
 def get_contacts(contacts_list):
     contacts = []
     for el in contacts_list:
@@ -65,14 +61,19 @@ def upgrade_contacts(contacts, index):
     for el in index[::-1]:
         del contacts[el[1]:(el[1] + 7)]
     return contacts
-   
-getContacts = get_contacts(contacts_list)
-getList = get_list(getContacts)
-findDuplicates = find_duplicates(getList)
-getIndices = get_indices(getContacts, findDuplicates)
-upgradeContacts = upgrade_contacts(getContacts, getIndices)
-get_List_new = get_list(upgradeContacts)
 
-with open("phonebook_2.csv", "w", newline='', encoding="UTF-8") as f:
-    datawriter = csv.writer(f, delimiter=',')
-    datawriter.writerows(get_List_new)
+if __name__ == '__main__':  
+    with open("phonebook_raw.csv", encoding="utf-8") as f:
+        rows = csv.reader(f, delimiter=",")
+        contacts_list = list(rows)
+
+    getContacts = get_contacts(contacts_list)
+    getList = get_list(getContacts)
+    findDuplicates = find_duplicates(getList)
+    getIndices = get_indices(getContacts, findDuplicates)
+    upgradeContacts = upgrade_contacts(getContacts, getIndices)
+    get_List_new = get_list(upgradeContacts)
+
+    with open("phonebook_2.csv", "w", newline='', encoding="utf-8") as f:
+        datawriter = csv.writer(f, delimiter=',')
+        datawriter.writerows(get_List_new)
